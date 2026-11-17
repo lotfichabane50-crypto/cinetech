@@ -1,20 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello MovieController!{% endblock %}
+{% block title %}Catalogue - CinéTech{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-slate-900">
+            Catalogue ({{ movies | length }} films)
+        </h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        {% if search %}
+            <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-medium">
+                Recherche active : "{{ search }}"
+            </span>
+        {% endif %}
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/laragon/www/cinetech/src/Controller/MovieController.php</code></li>
-        <li>Your template at <code>C:/laragon/www/cinetech/templates/movie/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% for movie in movies %}
+            <div class="bg-white rounded-xl shadow-md p-6 flex flex-col justify-between border border-slate-200">
+                <div>
+                    <div class="flex justify-between items-start mb-3">
+                        <span class="text-xs font-bold tracking-wider text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded">
+                            {{ movie.category | upper }}
+                        </span>
+
+                        {% if movie.rating >= 4.5 %}
+                            <span class="text-xs font-semibold bg-rose-100 text-rose-700 px-2.5 py-1 rounded-full">
+                                ❤️ Coup de cœur
+                            </span>
+                        {% endif %}
+                    </div>
+
+                    <h2 class="text-xl font-bold text-slate-900 mb-1">
+                        {{ movie.title }}
+                    </h2>
+                    <p class="text-sm text-slate-500 mb-4">
+                        Sortie en {{ movie.releaseYear }} • Note : <strong>{{ movie.rating }}/5</strong>
+                    </p>
+                    <p class="text-slate-600 text-sm mb-6">
+                        {{ movie.synopsis }}
+                    </p>
+                </div>
+
+                <a href="{{ path('app_movie_show', {id: movie.id}) }}"
+                   class="block text-center bg-slate-900 hover:bg-slate-800 text-white font-medium py-2.5 px-4 rounded-lg transition">
+                    Voir les détails
+                </a>
+            </div>
+        {% else %}
+            <p class="text-slate-500">Aucun film disponible dans le catalogue.</p>
+        {% endfor %}
+    </div>
 {% endblock %}
