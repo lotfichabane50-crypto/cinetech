@@ -11,6 +11,15 @@
     {% include '_partials/_navbar.html.twig' %}
 
     <main class="max-w-6xl mx-auto px-4 flex-grow w-full">
+    
+    {% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="p-4 mb-6 rounded-lg font-medium border {{ label == 'warning' ? 'bg-amber-100 text-amber-900 border-amber-300' : 'bg-emerald-100 text-emerald-900 border-emerald-300' }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
         {% block body %}{% endblock %}
     </main>
 
