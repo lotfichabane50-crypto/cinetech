@@ -9,34 +9,43 @@
         </a>
     </div>
 
-    <div class="bg-white rounded-2xl shadow-lg p-8 border border-slate-200 max-w-3xl">
-        <div class="flex flex-wrap items-center gap-3 mb-4">
-            <span class="text-xs font-bold tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded">
-                {{ movie.category | upper }}
-            </span>
-            <span class="text-sm text-slate-500">
-                Sortie : {{ movie.releaseYear }}
-            </span>
-            <span class="text-sm font-semibold text-amber-600">
-                ★ {{ movie.rating }} / 5
-            </span>
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200 max-w-4xl md:flex">
+        {% if movie.poster %}
+            <img src="{{ movie.poster }}" alt="{{ movie.title }}" class="w-full md:w-72 object-cover">
+        {% endif %}
 
-            {% if movie.rating >= 4.5 %}
-                <span class="text-xs font-semibold bg-rose-100 text-rose-700 px-3 py-1 rounded-full">
-                    ❤️ Coup de cœur
+        <div class="p-8 flex-grow">
+            <div class="flex flex-wrap items-center gap-3 mb-4">
+                <span class="text-xs font-bold tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded">
+                    {{ movie.category.name | upper }}
                 </span>
-            {% endif %}
+                <span class="text-sm text-slate-500">
+                    Sortie le {{ movie.releaseDate | date('d/m/Y') }}
+                </span>
+                <span class="text-sm text-slate-500">
+                    • {{ movie.duration }} min
+                </span>
+                <span class="text-sm font-semibold text-amber-600">
+                    ★ {{ movie.rating ?? 'N/A' }} / 5
+                </span>
+
+                {% if movie.rating and movie.rating >= 4.5 %}
+                    <span class="text-xs font-semibold bg-rose-100 text-rose-700 px-3 py-1 rounded-full">
+                        ❤️ Coup de cœur
+                    </span>
+                {% endif %}
+            </div>
+
+            <h1 class="text-4xl font-extrabold text-slate-900 mb-6">
+                {{ movie.title }}
+            </h1>
+
+            <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-2">
+                Synopsis
+            </h2>
+            <p class="text-slate-700 text-lg leading-relaxed">
+                {{ movie.synopsis }}
+            </p>
         </div>
-
-        <h1 class="text-4xl font-extrabold text-slate-900 mb-6">
-            {{ movie.title }}
-        </h1>
-
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-400 mb-2">
-            Synopsis
-        </h2>
-        <p class="text-slate-700 text-lg leading-relaxed">
-            {{ movie.synopsis }}
-        </p>
     </div>
 {% endblock %}

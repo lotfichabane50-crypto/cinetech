@@ -40,4 +40,17 @@ class MovieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-}
+/**
+     * Récupère tous les films avec leur catégorie en une seule requête SQL (évite le problème N+1)
+     *
+     * @return Movie[]
+     */
+    public function findAllWithCategory(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->innerJoin('m.category', 'c')
+            ->addSelect('c')
+            ->orderBy('m.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }}
