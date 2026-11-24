@@ -10,6 +10,14 @@
             <a href="{{ path('app_movie_new') }}" class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-4 py-2 rounded-lg transition">
                 + Ajouter un film
             </a>
+
+            {% if app.user %}
+                <span class="text-slate-300 text-sm">{{ app.user.email }}</span>
+                <a href="{{ path('app_logout') }}" class="hover:text-amber-400 transition">Déconnexion</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="hover:text-amber-400 transition">Connexion</a>
+                <a href="{{ path('app_register') }}" class="hover:text-amber-400 transition">Inscription</a>
+            {% endif %}
         </div>
     </div>
 </nav>

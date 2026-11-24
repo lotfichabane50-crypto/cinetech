@@ -4,15 +4,34 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Movie;
+use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    public function __construct(private readonly UserPasswordHasherInterface $hasher)
+    {
+    }
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+
+        // 0. Comptes de test (mots de passe hachés)
+        $admin = new User();
+        $admin->setEmail('admin@cinetech.fr');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword($this->hasher->hashPassword($admin, 'admin123'));
+        $manager->persist($admin);
+
+        $user = new User();
+        $user->setEmail('user@cinetech.fr');
+        $user->setRoles(['ROLE_USER']);
+        $user->setPassword($this->hasher->hashPassword($user, 'user123'));
+        $manager->persist($user);
 
         // 1. Création des 5 catégories
         $categoryNames = ['Science-Fiction', 'Action', 'Thriller', 'Comédie', 'Drame'];

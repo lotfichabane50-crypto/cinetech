@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - CinéTech{% endblock %}
+
+{% block body %}
+    <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-md border border-slate-200">
+        <div class="mb-6">
+            <h1 class="text-3xl font-bold text-slate-900">Créer un compte</h1>
+            <p class="text-slate-500 mt-1 text-sm">Rejoignez CinéTech et accédez à tout le catalogue.</p>
+        </div>
+
+        {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate', 'class': 'space-y-4'}}) }}
+            {{ form_widget(registrationForm) }}
+
+            <div class="pt-4">
+                <button type="submit"
+                        class="w-full bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold py-3 px-4 rounded-lg transition">
+                    S'inscrire
+                </button>
+            </div>
+        {{ form_end(registrationForm) }}
+
+        <p class="text-center text-sm text-slate-500 mt-6">
+            Déjà un compte ?
+            <a href="{{ path('app_login') }}" class="text-indigo-600 hover:underline font-medium">Se connecter</a>
+        </p>
+    </div>
+{% endblock %}
