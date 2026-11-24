@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories - CinéTech{% endblock %}
+
+{% block body %}
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-slate-900">
+            Catégories ({{ categories | length }})
+        </h1>
+
+        <a href="{{ path('app_category_new') }}"
+           class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-4 py-2 rounded-lg transition">
+            + Ajouter une catégorie
+        </a>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden">
+        <table class="w-full text-left">
+            <thead class="bg-slate-900 text-white text-sm uppercase tracking-wider">
+                <tr>
+                    <th class="px-6 py-3">Nom</th>
+                    <th class="px-6 py-3">Films rattachés</th>
+                    <th class="px-6 py-3 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200">
+                {% for category in categories %}
+                    <tr class="hover:bg-slate-50">
+                        <td class="px-6 py-4 font-medium text-slate-900">{{ category.name }}</td>
+                        <td class="px-6 py-4 text-slate-600">{{ category.movies | length }}</td>
+                        <td class="px-6 py-4">
+                            <div class="flex justify-end items-center gap-3 text-sm font-medium">
+                                <a href="{{ path('app_category_show', {id: category.id}) }}" class="text-indigo-600 hover:underline">Voir</a>
+                                <a href="{{ path('app_category_edit', {id: category.id}) }}" class="text-amber-600 hover:underline">Modifier</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="3" class="px-6 py-6 text-slate-500">Aucune catégorie enregistrée.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

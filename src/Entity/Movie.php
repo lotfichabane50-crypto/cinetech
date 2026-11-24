@@ -13,12 +13,16 @@ class Movie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Assert\NotBlank(message: 'Le titre du film est obligatoire.')]
-#[Assert\Length(min: 2, max: 255, minMessage: 'Minimum {{ limit }} caractères.')]
-
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le titre du film est obligatoire.')]
+    #[Assert\Length(
+        min: 2,
+        max: 255,
+        minMessage: 'Le titre doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -43,7 +47,7 @@ class Movie
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'La durée est obligatoire.')]
-#[Assert\Positive(message: 'La durée doit être strictement positive.')]
+    #[Assert\Positive(message: 'La durée doit être strictement positive.')]
     private ?int $duration = null;
 
     public function getId(): ?int

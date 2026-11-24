@@ -45,13 +45,24 @@
             </h2>
             <p class="text-slate-700 text-lg leading-relaxed">
                 {{ movie.synopsis }}
-                <div class="mt-8 pt-6 border-t border-slate-200 flex gap-4">
-    <a href="{{ path('app_movie_edit', {id: movie.id}) }}"
-       class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-5 py-2.5 rounded-lg transition">
-        ✏️ Modifier ce film
-    </a>
-</div>
             </p>
+
+            <div class="mt-8 pt-6 border-t border-slate-200 flex flex-wrap items-center gap-4">
+                <a href="{{ path('app_movie_edit', {id: movie.id}) }}"
+                   class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-5 py-2.5 rounded-lg transition">
+                    ✏️ Modifier ce film
+                </a>
+
+                <form method="post"
+                      action="{{ path('app_movie_delete', {id: movie.id}) }}"
+                      onsubmit="return confirm('Supprimer définitivement ce film ?');">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ movie.id) }}">
+                    <button type="submit"
+                            class="bg-rose-600 hover:bg-rose-500 text-white font-semibold px-5 py-2.5 rounded-lg transition">
+                        🗑️ Supprimer
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock %}

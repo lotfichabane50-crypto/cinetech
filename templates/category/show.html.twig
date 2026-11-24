@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ category.name }} - CinéTech{% endblock %}
+
+{% block body %}
+    <div class="mb-6">
+        <a href="{{ path('app_category_index') }}" class="text-indigo-600 hover:underline font-medium">
+            ← Retour aux catégories
+        </a>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-8 max-w-2xl">
+        <span class="text-xs font-bold tracking-wider text-indigo-600 bg-indigo-50 px-3 py-1 rounded">
+            Catégorie #{{ category.id }}
+        </span>
+
+        <h1 class="text-3xl font-extrabold text-slate-900 my-4">{{ category.name }}</h1>
+
+        <p class="text-slate-600 mb-8">
+            {{ category.movies | length }} film(s) rattaché(s) à cette catégorie.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 pt-6 border-t border-slate-200">
+            <a href="{{ path('app_category_edit', {id: category.id}) }}"
+               class="bg-amber-400 hover:bg-amber-300 text-slate-900 font-semibold px-5 py-2.5 rounded-lg transition">
+                ✏️ Modifier cette catégorie
+            </a>
+
+            {{ include('category/_delete_form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

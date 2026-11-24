@@ -40,7 +40,8 @@ class MovieRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-/**
+
+    /**
      * Récupère tous les films avec leur catégorie en une seule requête SQL (évite le problème N+1)
      *
      * @return Movie[]
@@ -53,4 +54,5 @@ class MovieRepository extends ServiceEntityRepository
             ->orderBy('m.id', 'DESC')
             ->getQuery()
             ->getResult();
-    }}
+    }
+}
